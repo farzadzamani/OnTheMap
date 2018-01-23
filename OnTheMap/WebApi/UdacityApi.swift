@@ -26,9 +26,11 @@ class UdacityApi {
         request.httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".data(using: .utf8)
         
         let task = jsonDownloader.jsonTask(with: request, isForUdacity: true) { (data, error) in
-            if error != nil {
-                 Compilation(NetworkError.invalidUserName)
-                return
+            if let error = error {
+                  print("getsessionid=\(error.description)")
+                 Compilation(error)
+   
+            
             }else if let user = data!["account"] as? [String:Any], let userId = user["key"] as? String  {
                      if let session = data!["session"] as? [String:Any], let sessionId = session["id"] as? String  {
                     AppDelegate.userId = userId

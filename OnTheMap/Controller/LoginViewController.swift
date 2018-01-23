@@ -28,15 +28,19 @@ class LoginViewController: UIViewController {
     @IBAction func login(_ sender: Any) {
         let username = usernameTextField.text!
         let password = passwordTextField.text!
-            
+        
+        
         if username == "" || password == "" {
            alert(view: self, title: "ALERT", message: "Please Input Username And Password")
             return
         }
-        
+        print("Execute ")
         UdacityApi.shared.getSessionIdWith(username: username, password: password) { (error) in
             if let error = error {
+                 print("login error=\(error.description)")
+                performUIUpdatesOnMain{
                  alert(view: self, title: "Error", message: error.description)
+                }
             } else {
                     performUIUpdatesOnMain {
                    self.performSegue(withIdentifier: "LoginSeque", sender: nil)

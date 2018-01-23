@@ -42,6 +42,7 @@ class ParseApi {
 
 
 typealias studentCompilationHandler = (StudentLocation?, NetworkError?) -> Void
+    
     func getStudentLocation(uniqueKey:String, compilationHandler compilation: @escaping studentCompilationHandler) -> () {
         let request = makeRequest(url: value.GetStudentLocationUrl,
                                   method: .GET,
@@ -166,7 +167,7 @@ extension ParseApi {
         
        
         static let BaseUrl = "https://parse.udacity.com/parse/classes/"
-        static let GetAllStudentsMethod = "https://parse.udacity.com/parse/classes/StudentLocation?limit=100"
+        static let GetAllStudentsMethod = "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&order=-updatedAt"
          static let ContentType = "application/json"
         static let ParseApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let RESTAPIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"

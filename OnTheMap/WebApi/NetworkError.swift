@@ -16,6 +16,7 @@
     case jsonParsingFailure
     case invalidUserName
     case noValue
+    case UknownError
 }
 extension NetworkError {
     var description: String {
@@ -23,10 +24,13 @@ extension NetworkError {
         case .invalidData:
             return "InvalidData"
         case .invalidUserName:
-            return "Invalid UserName Or Password"
-       
+            return "Invalid UserName Or Password Entered"
+        case .jsonConversionFailure:
+            return "json Conversion Failed"
+        case .responseUnsuccessful:
+            return "failure to connect to the Server"
         default:
-           return "Unknown error"
+           return "Uknown Error"
         }
     }
 }
