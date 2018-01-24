@@ -22,20 +22,8 @@ class MapViewController: UIViewController {
         print("ViewDidLOAd -> MAPVIEW")
         // Do any additional setup after loading the view.
     }
-    
-    
-//    func addPlacesOnMapWith(studentLocations:[StudentLocation],MapView mapView:MKMapView) {
-//        performUIUpdatesOnMain {
-//            for studentlocation in studentLocations {
-//                print("Student Location : \(studentlocation)")
-//                let anotation = StudentAnotaion(studentLocation: studentlocation)
-//                mapView.addAnnotation(anotation)
-//            }
-//
-//        }
-//
-//
-//    }
+
+
     
 }
 extension MapViewController:MKMapViewDelegate{

@@ -19,11 +19,13 @@ class newLocationViewController: UIViewController {
     @IBOutlet weak var stackviewFindLocation: UIStackView!
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     enum StepProccess {
         case start
         case finish
     }
-    
+
     var showStartingStep:StepProccess = .start {
         didSet {
             if showStartingStep == .start {
@@ -51,6 +53,8 @@ class newLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showStartingStep = .start
+     
+        self.activityIndicator.isHidden = true
         if self.studentLocation != nil {
             locationText.text = studentLocation?.mapString
             urlLinkText.text = studentLocation?.mediaURL
@@ -59,14 +63,15 @@ class newLocationViewController: UIViewController {
     }
     
     @IBAction func findLocation(_ sender: Any) {
-        
+         self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+       
         if let address = self.locationText.text,let link = self.urlLinkText.text {
             let geocoder =  CLGeocoder()
-            
+           
             
             geocoder.geocodeAddressString(address) { (placemarks, error) in
                 performUIUpdatesOnMain {
-                    
                     
                     guard
                         let placemarks = placemarks,
@@ -74,10 +79,12 @@ class newLocationViewController: UIViewController {
                         
                         else {
                             alert(view: self, title: "Error", message: "This Location Coordinate is wronge Please enter correct location")
+                            self.activityIndicator.stopAnimating()
+                            self.activityIndicator.isHidden = true
                             return
                     }
                     
-                    
+                   
                     
                     if self.studentLocation != nil {
                         self.updateLocation = true
@@ -94,10 +101,13 @@ class newLocationViewController: UIViewController {
                         
                     }
                     
-                    
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
                 }
                 
             }
+            
+            
         }
         
     }
@@ -113,8 +123,8 @@ class newLocationViewController: UIViewController {
     }
     
     @IBAction func finish(_ sender: Any) {
-        print(showStartingStep)
-        // Mark - Get a Name Of User From Udacity
+  
+        
         if updateLocation {
             
             ParseApi.Shared.putStudentLocation(student: self.studentLocation!, compilationHandler: { (error) in
@@ -152,6 +162,7 @@ class newLocationViewController: UIViewController {
     }
     private func startStep() {
         showStartingStep = .start
+        
         
     }
     
