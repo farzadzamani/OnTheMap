@@ -51,14 +51,7 @@ typealias studentCompilationHandler = (StudentLocation?, NetworkError?) -> Void
                                                        key.RESTAPIKey:value.RESTAPIKey,]) as URLRequest
         print(request)
         
-//    let urlbasestring = "https://parse.udacity.com/parse/classes/StudentLocation?where="
-//    let urlString = "\(urlbasestring){\"uniqueKey\":\"\(uniqueKey)\"}"
-//    print(urlString)
-//    let url = URL(string: urlString)
-//
-//    var request = URLRequest(url: url!)
-//    request.addValue(Keys.ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
-//     request.addValue(Keys.RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+
         
         
     let task = JSONDownloader().jsonTask(with: request, isForUdacity: false) { (data, error) in
@@ -100,18 +93,14 @@ typealias studentCompilationHandler = (StudentLocation?, NetworkError?) -> Void
                                                  key.ContentType:value.ContentType]) as URLRequest
         
         
-        
-    let session = URLSession.shared
-    let task = session.dataTask(with: request) { data, response, error in
-        if error == nil { // Handle error…
+
+        let task = JSONDownloader().postJsonTask(with: request) { (error) in
+            if error == nil {
             compilation(nil)
-        }else {
-            compilation(NetworkError.requestFailed)
+            }else {compilation(error)}
         }
-        print(String(data: data!, encoding: .utf8)!)
-    }
-    task.resume()
-    
+        task.resume()
+        
 }
 //
 //    /*
@@ -136,17 +125,13 @@ typealias studentCompilationHandler = (StudentLocation?, NetworkError?) -> Void
       
         
 
-        let session = URLSession.shared
-    
-        let task = session.dataTask(with: request) { data, response, error in
-            if error == nil { // Handle error…
+        let task = JSONDownloader().postJsonTask(with: request) { (error) in
+            if error == nil {
                 compilation(nil)
-            }else {
-                compilation(NetworkError.requestFailed)
-            }
-            print(String(data: data!, encoding: .utf8)!)
+            }else {compilation(error)}
         }
         task.resume()
+        
         }
     
 }

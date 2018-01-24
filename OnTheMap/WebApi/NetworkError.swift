@@ -29,6 +29,9 @@ extension NetworkError {
             return "json Conversion Failed"
         case .responseUnsuccessful:
             return "failure to connect to the Server"
+        case .requestFailed:
+            return "failure to add new Location"
+            
         default:
            return "Uknown Error"
         }

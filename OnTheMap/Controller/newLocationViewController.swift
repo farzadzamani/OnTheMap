@@ -129,9 +129,9 @@ class newLocationViewController: UIViewController {
             
             ParseApi.Shared.putStudentLocation(student: self.studentLocation!, compilationHandler: { (error) in
                 if error != nil {
-                    performUIUpdatesOnMain {
-                        alert(view: self, title: "Error", message: "Proccess Faild,Please check the internet connection and Try Again")
-                    }
+                
+                       self.isErrorOnPostStudent()
+                    
                 }else {
                     performUIUpdatesOnMain {
                         self.studentLocation = nil
@@ -144,9 +144,9 @@ class newLocationViewController: UIViewController {
         }else {
             ParseApi.Shared.postStudentLocation(student: self.studentLocation!, compilationHandler: { (error) in
                 if error != nil {
-                    performUIUpdatesOnMain {
-                        alert(view: self, title: "Error", message: "Proccess Faild,Please check the internet connection and Try Again")
-                    }
+                   
+                       self.isErrorOnPostStudent()
+                    
                 }else {
                     performUIUpdatesOnMain {
                         self.studentLocation = nil
@@ -159,6 +159,14 @@ class newLocationViewController: UIViewController {
         }
         
         
+    }
+    
+    private func isErrorOnPostStudent(){
+         performUIUpdatesOnMain {
+        alertWithViewDismiss(view: self, title: "Error", message: "Proccess Faild,Please check the internet connection and Try Again")
+        self.studentLocation = nil
+      
+        }
     }
     private func startStep() {
         showStartingStep = .start

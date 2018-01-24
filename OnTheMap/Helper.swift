@@ -68,10 +68,26 @@ extension Dictionary {
     func alert(view:UIViewController,title:String,message:String) {
         performUIUpdatesOnMain {
             let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (action: UIAlertAction!) in
+                alert.dismiss(animated: true, completion: nil)
+                view.dismiss(animated: true, completion: nil)
+            })
+        
             view.present(alert, animated: true, completion: nil)
         }
     }
+// Mark - GENERAL UI HELPER Method(Alert)
+func alertWithViewDismiss(view:UIViewController,title:String,message:String) {
+    performUIUpdatesOnMain {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (action: UIAlertAction!) in
+            alert.dismiss(animated: true, completion: nil)
+            view.dismiss(animated: true, completion: nil)
+        })
+        
+        view.present(alert, animated: true, completion: nil)
+    }
+}
 // Mark - GENERAL UI HELPER Method(Alert)
 func confirmAlert(view:UIViewController,title:String,message: String, dismissButtonTitle: String = "Cancel", actionButtonTitle: String = "OK", action: @escaping ((UIAlertAction!) -> Void)) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
