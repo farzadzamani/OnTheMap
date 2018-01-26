@@ -65,7 +65,8 @@ class newLocationViewController: UIViewController {
     @IBAction func findLocation(_ sender: Any) {
          self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
-       
+        self.locationText.resignFirstResponder()
+        self.urlLinkText.resignFirstResponder()
         if let address = self.locationText.text,let link = self.urlLinkText.text {
             let geocoder =  CLGeocoder()
            
